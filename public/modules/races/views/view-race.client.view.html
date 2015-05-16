@@ -2,7 +2,7 @@
 	<div class="page-header">
 		<h1 data-ng-bind="race.name"></h1>
 	</div>
-	<div class="pull-right" data-ng-show="((authentication.user) && (authentication.user._id == race.user._id))">
+	<div class="pull-right" data-ng-show="((authentication.user) && (authentication.user._id == race.user._id) || (authentication.user.roles.indexOf('admin') !== -1))">
 		<a class="btn btn-primary" href="/#!/races/{{race._id}}/edit">
 			<i class="glyphicon glyphicon-edit"></i>
 		</a>
