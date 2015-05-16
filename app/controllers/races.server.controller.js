@@ -72,7 +72,7 @@ exports.delete = function(req, res) {
 /**
  * List of Races
  */
-exports.list = function(req, res) { 
+exports.list = function(req, res) {
 	Race.find().sort('-created').populate('user', 'displayName').exec(function(err, races) {
 		if (err) {
 			return res.status(400).send({
@@ -87,7 +87,7 @@ exports.list = function(req, res) {
 /**
  * Race middleware
  */
-exports.raceByID = function(req, res, next, id) { 
+exports.raceByID = function(req, res, next, id) {
 	Race.findById(id).populate('user', 'displayName').exec(function(err, race) {
 		if (err) return next(err);
 		if (! race) return next(new Error('Failed to load Race ' + id));
@@ -100,7 +100,7 @@ exports.raceByID = function(req, res, next, id) {
  * Race authorization middleware
  */
 exports.hasAuthorization = function(req, res, next) {
-	if (req.race.user.id !== req.user.id) {
+	if (req.race.user.id !== req.user.id && req.user.roles.indexOf('admin') === -1) {
 		return res.status(403).send('User is not authorized');
 	}
 	next();
